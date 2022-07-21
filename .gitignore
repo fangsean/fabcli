@@ -7,3 +7,4 @@ venv
 Test.py
 dist
 *.pyc
+.kube
