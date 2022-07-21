@@ -54,7 +54,6 @@ class Component(object):
 
 class GitComponent(Component):
     MODEL = "Git"
-    KEY_ROOT_SPACE = 'root_space'
     DEFAULT_ENV = 'dev'
 
     def __init__(self, model=None, branch=None):
@@ -64,8 +63,10 @@ class GitComponent(Component):
         self._user = git_config["user"]
         self._token = git_config["token"]
         self._git_url = git_config["url"]
+        self._name = git_config["name"]
         self._destination = git_config['destination']
-        self._local_root_space = self.__finnal_configer__.get_params(setting.SERVER_PATH_LOCAL, self.KEY_ROOT_SPACE)
+        self._type = git_config['type']
+        self._local_root_space = self.__finnal_configer__.get_params(setting.SERVER_PATH_LOCAL, setting.KEY_ROOT_SPACE)
         self._local_model_path = os.path.join(self._local_root_space, self._model)
 
     @func_exception_log("代码克隆")
@@ -135,15 +136,19 @@ class GitComponent(Component):
 
 
 class JarComponent(GitComponent):
-    FILE_TYPE = '.jar'
+    FILE_TYPE = 'jar'
 
     def __init__(self, model=None, deploy=None, branch=None):
         super().__init__(model, branch)
+
+        if self._type != JarComponent.FILE_TYPE:
+            raise AssertionError("The model %s type is not jar." % (model))
+
         self.deploy = deploy
-        self._target_file = self._destination + self.FILE_TYPE
+        self._target_file = self._destination + '.jar'
         self.server_path_local = os.path.join(self._local_root_space, model)
         self.server_path_local_target = os.path.join(self.server_path_local, 'target')
-        server_remote_path = self.__finnal_configer__.get_params(setting.SERVER_PATH_REMOTE, self.KEY_ROOT_SPACE)
+        server_remote_path = self.__finnal_configer__.get_params(setting.SERVER_PATH_REMOTE, setting.KEY_ROOT_SPACE)
         self.server_path_remote = os.path.join(server_remote_path, model)
         servers = self.__finnal_configer__.get_params(setting.SERVERS_HOSTS, self._model, self.deploy)
         server_hosts = [self.__finnal_configer__.get_params(server) for server in servers]
@@ -299,12 +304,13 @@ class DockerComponent(GitComponent):
 
     def __init__(self, model=None, deploy=None, tag=None):
         super().__init__(model, tag)
+
+        if self._type != DockerComponent.FILE_TYPE:
+            raise AssertionError("The model %s type is not docker." % (model))
+
         self._deploy = deploy
         self._tag = tag
         self._docker_model_tag = None
-        git_config = self.__finnal_configer__.get_params(setting.SERVER_GIT, model)
-        self._destination = git_config["destination"]
-        self._name = git_config["name"]
         docker = self.__finnal_configer__.get_params(setting.REPOSITORY, "docker")
         self._s3 = docker['s3']
         self._registry = docker['registry']

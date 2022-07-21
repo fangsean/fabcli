@@ -26,7 +26,7 @@ REPOSITORY_PROJECTS = 'projects'
 SERVER_GIT = 'server_git'
 SERVER_PATH_LOCAL = 'server_path_local'
 SERVER_PATH_REMOTE = 'server_path_remote'
-
+KEY_ROOT_SPACE = 'root_space'
 
 # @Singleton
 class Settings(Singleton):
