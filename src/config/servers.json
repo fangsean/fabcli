@@ -1,0 +1,10 @@
+{
+  "tsp-entry-backend": {
+    "devlocal": [
+      "hosts-2"
+    ],
+    "dev": [
+      "hosts-dev"
+    ]
+  }
+}

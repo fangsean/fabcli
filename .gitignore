@@ -1,0 +1,9 @@
+.idea
+.logs
+build
+fubcli.egg-info
+dist
+venv
+Test.py
+dist
+*.pyc

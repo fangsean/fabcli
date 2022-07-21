@@ -1,0 +1,33 @@
+docker:
+  s3: https://fangsean.s3.cn-north-1.amazonaws.com.cn
+  registry: 298456415402.dkr.ecr.cn-north-1.amazonaws.com.cn
+git:
+  user: docker-gitlab-token
+  token: MzIzMTAzMTUxMjc0OpCeUNDBMHu9V1dNSfUYd5LESZ/S
+projects:
+  - name: fabcli
+    type: docker
+    destination: fabcli
+    url: https://gitlab.com/fang.sean/fabcli.git
+
+  - name: tsp-billing-general
+    type: docker
+    destination: billing-portal-general
+    url: https://atc.bmwgroup.net/bitbucket/scm/tspfpc/tsp-billing-general.git
+
+  - name: tsp-billing-scheduler
+    type: docker
+    destination: tsp-billing-scheduler
+    url: https://atc.bmwgroup.net/bitbucket/scm/tspfpc/tsp-billing-scheduler.git
+
+  - name: tsp-billing-data-cleaning
+    type: docker
+    destination: data-cleaning-deployment
+    url: https://atc.bmwgroup.net/bitbucket/scm/tspfpc/tsp-billing-data-cleaning.git
+
+  - name: tsp-entry-backend
+    type: git
+    destination: b3c-0.0.1-SNAPSHOT
+    url: https://atc.bmwgroup.net/bitbucket/scm/tspfpc/tsp-entry-backend.git
+
+productVersion: 0.1-rc1

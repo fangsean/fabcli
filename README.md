@@ -1,0 +1,64 @@
+## 线上服务自动化部署工具操作说明
+
+#### 适用环境
+
+    根据 fabcli.ini 文件进行配置 服务，远程主机，路径相关信息，以及./config/$(*).json文件 配置主机，服务之间的依赖映射关系。。
+
+#### 提供功能有如下步骤：
+```bash
+  backup   执行回退任务
+  check    检查校验
+  ci       初始化准备
+  deploy   发布
+  git      执行代码更新任务
+  go       执行发布任务
+  jar      打包服务 ##被依赖的不需要发布的服务情况##
+  kill     停止服务进程
+  restart  重启服务进程
+  test     测试
+
+```
+
+#### 操作说明：
+
+操作控制台环境：
+
+【主机】：192.168.1.13\
+【用户】：ec2-user\
+【密码】：*** \
+【目录】：`/opt/automation/`\
+【命令】：fabcli
+
+-----------
+<i>详细操作见doc文档！</i>
+
+### 配置文件说明
+
+> 见 .ini文件 和 json文件
+-----------------------
+#### init app --debug
+```
+    pip install --editable --verbose .
+```
+
+#### uninstall app --debug
+```
+    pip uninstall fabcli --verbose
+```
+
+### wheel 方式
+```shell
+pip install -r requirements.txt
+python setup.py sdist
+python setup.py bdist_wheel
+----
+pip install wheel
+pip install ./dist/fabcli-1.0-py3-none-any.whl
+```
+
+### docker
+
+```shell
+sudo docker build -t automation/fabcli:0.1-rc1 .
+sudo docker run -v /root/.kube:/root/.kube -it -d automation/fabcli:0.1-rc1
+```

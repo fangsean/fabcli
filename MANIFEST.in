@@ -1,0 +1,3 @@
+include src/config/*.*
+include src/templates/**/*.*
+include src/identity_files/*.*
