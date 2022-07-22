@@ -32,8 +32,8 @@ repos:
 
   -   repo: local
       hooks:
-        -   id: changelogs-rst
-            name: changelogs must be rst
+        -   id: changelogs-py
+            name: changelogs must be py
             entry: changelog filenames must end in .py
             language: fail
             files: 'changelog/.*(?<!\.py)$'
