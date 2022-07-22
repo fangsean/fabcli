@@ -12,7 +12,7 @@ WORKDIR /opt/automation/fabcli
 COPY requirements.txt  .
 COPY requirements-dev.txt  .
 RUN pip3 install --upgrade pip && \
-    pip3 install  -r requirements.txt --proxy http://proxy.tsp.cn-north-1.aws.unicom.cloud.bmw:8080
+    pip3 install  -r requirements.txt #--proxy http://proxy.tsp.cn-north-1.aws.unicom.cloud.bmw:8080
 
 COPY ./  /opt/automation/fabcli
 
