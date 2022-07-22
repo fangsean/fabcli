@@ -1,8 +1,9 @@
+import fabcli
 from setuptools import setup, find_packages
 
 setup(
     name='fabcli',
-    version='1.0',
+    version=fabcli.__version__,
     author='fangsean',
     author_email='jsen.yin@gmail.com',
     long_description=open('README.md', encoding="utf-8").read(),
@@ -15,7 +16,7 @@ setup(
         'Fabric3>=1.1,<2.0',
         'Click',
     ],
-    scripts=['fabcli.py','fabfile.py'],
+    scripts=['fabcli.py', 'fabfile.py'],
     entry_points='''
         [console_scripts]
         fabcli=fabcli:main
