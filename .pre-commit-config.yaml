@@ -24,12 +24,8 @@ repos:
       - id: flake8
         name: flake8
         args: [--config, setup.cfg]
-  # need to remove pytest since is not found in git terminal
-  # - repo: local
-  #   hooks:
-  #     - id: pytest
-  #       name: pytest
-  #       entry: pytest
-  #       language: system
-  #       pass_filenames: false
-  #       always_run: true
+
+  - repo: https://github.com/psf/black
+    rev: 21.6b0
+    hooks:
+      - id: black
