@@ -30,9 +30,6 @@ repos:
     hooks:
       - id: black
 
-exclude: |
-  (?x)^(
-    *.txt?|
-    .*|
-    *.md|
-  )
+
+exclude: '^$'
+fail_fast: false
