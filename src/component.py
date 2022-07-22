@@ -19,6 +19,7 @@ from fabric.utils import abort
 from src.comm_model import setting
 from src.comm_model.setting import Settings, IDENTITY_FILES
 from src.comm_model.wrapper import func_exception_log, ignore_error
+from src.util.files import md5sum
 from src.util.mylog import logger
 
 
@@ -31,8 +32,7 @@ class Component(object):
         self.__finnal_configer__ = Settings()
         self._model = model
 
-    # 成功
-    # @runs_once
+    @runs_once
     def model_end(self):
         click.echo(green("[" + self._model + "] 工作流程执行完毕!"))
 
@@ -77,11 +77,6 @@ class GitComponent(Component):
             git_branch = self._git_branch
             git_url = self._git_url
             credentials = self._token
-            # git_url_formate = git_url.split("://")
-            # git_url_protocol = git_url_formate[0]  # 协议
-            # git_url_remote = git_url_formate[1]
-            # credentials = base64.b64encode(f"{self.__token}:".encode("latin-1")).decode("latin-1")
-            # git_token_url = r'{0}://{1}:{2}@{3}'.format(git_url_protocol, self.__user, self.__token, git_url_remote)
             c = f"http.{git_url}/.extraheader=AUTHORIZATION: Bearer {credentials}"
             if os.path.exists(os.path.join(self._local_model_path, ".git")):
                 cloned_repo = git.Repo(self._local_model_path)
@@ -152,15 +147,14 @@ class JarComponent(GitComponent):
         self.server_path_remote = os.path.join(server_remote_path, model)
         servers = self.__finnal_configer__.get_params(setting.SERVERS_HOSTS, self._model, self.deploy)
         server_hosts = [self.__finnal_configer__.get_params(server) for server in servers]
-        instance = server_hosts[0]
-        env.port = instance['port']
-        env.hosts = [instance['host']]
-        env.host_string = instance['host']
-        env.user = instance['user']
-        env.password = instance['password']
-        env.key_filename = os.path.join(IDENTITY_FILES, instance['key_filename'])
 
-    @runs_once
+        env.hosts = [f"{instance['user']}@{instance['host']}:{instance['port']}" for instance in server_hosts]
+        env.key_filename = [os.path.join(IDENTITY_FILES, instance['key_filename']) for instance in server_hosts if
+                            instance['key_filename'] != None]
+        env.passwords = {f"{s['user']}@{s['host']}:{s['port']}": s['password'] for s in server_hosts if
+                         s['password'] != None}
+
+    # @runs_once
     @func_exception_log()
     def model_remote_check(self):
         self.runmkdir(os.path.join(self.server_path_remote, 'target', 'temp'))
@@ -193,10 +187,9 @@ class JarComponent(GitComponent):
     def model_jar_check(self):
         with settings(hide(*setting.HIDE_GROUPS), warn_only=False):
             with lcd(self.server_path_local_target):
-                lmd5 = local('md5sum ' + self._target_file, capture=True).split(' ')[0]
-                rmd5 = \
-                    run('md5sum ' + os.path.join(self.server_path_remote, 'target', 'temp', self._target_file)).split(
-                        ' ')[0]
+                lmd5 = md5sum(self._target_file)
+                rmd5 = run('md5sum ' + os.path.join(self.server_path_remote, 'target', 'temp',
+                                                    self._target_file)).split(' ')[0]
             if lmd5 == rmd5:
                 return True
             else:

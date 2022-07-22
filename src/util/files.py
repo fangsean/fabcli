@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-   
-
+# -*- coding: utf-8 -*-
+import hashlib
 import os
 
 from yaml import load, Loader
@@ -20,3 +20,9 @@ def load_config(path):
     config = load(f, Loader=Loader)
     f.close()
     return config
+
+
+def md5sum(filename):
+    with open(filename, "r") as file:
+        f_cont = file.read()
+    return hashlib.md5(f_cont).hexdigest()

@@ -74,15 +74,15 @@ def go(model, deploy, branch):
     execute(component.model_jar_check),
     execute(component.model_server_kill),
     execute(component.model_jar_upgraded),
-    #execute(component.model_server_startup),
-    #execute(component.model_netstat),
+    execute(component.model_server_startup),
+    execute(component.model_netstat),
     execute(component.model_end)
     sys.exit(0)
 
 
 @task()
 @parallel
-@func_exception_log("backup")
+@func_exception_log("rollback")
 def rollback(model, deploy):
     ''' 执行回退任务 '''
 
@@ -152,11 +152,3 @@ def cicd(model, deploy, tag):
     execute(component.model_end)
 
     sys.exit(0)
-
-
-if __name__ == '__main__':
-    # ci("tsp-billing-general", "devlocal")
-    cicd("tsp-billing-general", "devlocal", "dev13")
-    # git('billing-protal-backend', 'master')
-    # go('billing-protal-backend', 'devlocal', 'master')
-    check('dev')

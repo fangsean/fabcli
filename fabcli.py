@@ -206,10 +206,3 @@ def warning_info(config):
     click.echo(magenta(list(config.get_params("deploy").keys())))
     sys.exit(red("\tBreak"))
 
-
-if __name__ == '__main__':
-    check(['--namespace', 'Account'])
-    # deploy(['-n', 'kube-system'])
-    # jar(['-m', 'entry', '-e', "dev"])
-    ci(['-m', 'billing-portal-general', '-e', "devlocal"])
-    # git(['-m', 'fabcli', '-b', 'main'])
