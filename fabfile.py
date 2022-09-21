@@ -71,7 +71,7 @@ def go(model, deploy, branch):
     execute(component.model_mvn_package),
     execute(component.model_remote_check),
     execute(component.model_jar_push),
-    execute(component.model_jar_check),
+    #execute(component.model_jar_check),
     execute(component.model_server_kill),
     execute(component.model_jar_upgraded),
     execute(component.model_server_startup),
@@ -148,7 +148,7 @@ def cicd(model, deploy, tag):
     component = CICDComponent(model, deploy, tag)
     execute(component.docker_model_tag),
     execute(component.kub_patch_deployment),
-    execute(component.kub_delete_productentry)
+    execute(component.kub_delete_productentry),
     execute(component.model_end)
 
     sys.exit(0)
