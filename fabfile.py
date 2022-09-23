@@ -4,12 +4,16 @@ import sys
 
 import click
 from fabric.api import local, env
-from fabric.colors import *
+from fabric.colors import green, yellow
 from fabric.decorators import task, parallel, roles
 from fabric.tasks import execute
 
 from src.comm_model.setting import Settings
-from src.component import CICDComponent, RollBackComponent, JarComponent, GitComponent, DockerComponent
+from src.component import CICDComponent
+from src.component import RollBackComponent
+from src.component import JarComponent
+from src.component import GitComponent
+from src.component import DockerComponent
 from src.component import func_exception_log
 
 env.roledefs['git'] = ['localhost']
@@ -71,7 +75,7 @@ def go(model, deploy, branch):
     execute(component.model_mvn_package),
     execute(component.model_remote_check),
     execute(component.model_jar_push),
-    #execute(component.model_jar_check),
+    execute(component.model_jar_check),
     execute(component.model_server_kill),
     execute(component.model_jar_upgraded),
     execute(component.model_server_startup),

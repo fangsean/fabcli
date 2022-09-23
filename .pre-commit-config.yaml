@@ -6,29 +6,12 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-  - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
-    hooks:
-      - id: isort
-        name: isort (python)
-        args: [--settings-path, setup.cfg]
-  - repo: https://github.com/google/yapf
-    rev: v0.32.0
-    hooks:
-      - id: yapf
-        name: yapf
-        args: [--style, setup.cfg]
   - repo: https://gitlab.com/pycqa/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
         name: flake8
         args: [--config, setup.cfg]
-
-  - repo: https://github.com/psf/black
-    rev: 21.6b0
-    hooks:
-      - id: black
 
   -   repo: local
       hooks:

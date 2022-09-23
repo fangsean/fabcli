@@ -20,5 +20,12 @@ setup(
     entry_points='''
         [console_scripts]
         fabcli=fabcli:main
-    '''
+    ''',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Other Environment',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.8'
+    ],
 )
