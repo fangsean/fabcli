@@ -89,7 +89,6 @@ class GitComponent(Component):
                 cloned_repo.git.reset('--hard', 'HEAD')
                 cloned_repo.remotes.origin.fetch()
                 cloned_repo.git.checkout(self._git_branch)
-                cloned_repo.remotes.origin.merge()
                 cloned_repo.remotes.origin.pull()
             else:
                 cloned_repo = git.Repo.clone_from(
